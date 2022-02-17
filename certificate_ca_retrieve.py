@@ -10,19 +10,19 @@ try:
 except:
     from urllib.parse import urlencode
 
+method_name = "retrieve"
+module_name = "certificate"
+obj_type = "ca"
+obj_name = "yahoo_com.pem"
+headers = {'Content-Type': 'application/json',}
+
 
 try:
   option = json.load(open("config.json"))
 
   response=BytesIO()
   base_url = 'http://{0}/SAFe/sng_rest/api/'.format(option["SERVER"])
-  method_name = "retrieve"
-  module_name = "certificate"
-  obj_type = "ca"
-  obj_name = "yahoo_com.pem"
   url = base_url+method_name+'/'+module_name+'/'+obj_type+'/'+obj_name
-  print(url)
-  headers = {'Content-Type': 'application/json',}
 
   c = pycurl.Curl()
   c.setopt(pycurl.WRITEFUNCTION, response.write)

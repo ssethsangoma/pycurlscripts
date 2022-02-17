@@ -10,21 +10,17 @@ try:
 except:
     from urllib.parse import urlencode
 
-method_name = "list"
-module_name = "certificate"
-obj_type = "ca"
-obj_name = ""
-headers = {'Content-Type': 'application/json',}
-
-
 try:
   option = json.load(open("config.json"))
 
   response=BytesIO()
   base_url = 'http://{0}/SAFe/sng_rest/api/'.format(option["SERVER"])
+  method_name = "info"
+  module_name = "application"
+  obj_type = "license"
+  obj_name = ""
   url = base_url+method_name+'/'+module_name+'/'+obj_type+'/'+obj_name
-
-
+  headers = {'Content-Type': 'application/json',}
   c = pycurl.Curl()
   c.setopt(pycurl.WRITEFUNCTION, response.write)
 
@@ -33,6 +29,8 @@ try:
     c.setopt(pycurl.HTTPHEADER, ['X-API-KEY: {0}'.format(option["API_KEY"]),'Accept: application/json'])
   else:
     c.setopt(pycurl.HTTPHEADER, ['Accept: application/json'])
+
+  c.setopt(pycurl.HTTPGET, 1)
   c.perform()
   data=response.getvalue()
   print(data)

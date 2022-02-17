@@ -11,29 +11,31 @@ except:
     from urllib.parse import urlencode
 
 method_name = "list"
-module_name = "certificate"
-obj_type = "ca"
+module_name = "cdr"
+obj_type = "cdr"
 obj_name = ""
 headers = {'Content-Type': 'application/json',}
 
-
 try:
   option = json.load(open("config.json"))
-
   response=BytesIO()
+
   base_url = 'http://{0}/SAFe/sng_rest/api/'.format(option["SERVER"])
   url = base_url+method_name+'/'+module_name+'/'+obj_type+'/'+obj_name
 
-
   c = pycurl.Curl()
   c.setopt(pycurl.WRITEFUNCTION, response.write)
-
   c.setopt(pycurl.URL, url)
+
   if(option["API_KEY"]):
     c.setopt(pycurl.HTTPHEADER, ['X-API-KEY: {0}'.format(option["API_KEY"]),'Accept: application/json'])
   else:
     c.setopt(pycurl.HTTPHEADER, ['Accept: application/json'])
+
+  c.setopt(pycurl.HTTPGET, 1)
+
   c.perform()
+
   data=response.getvalue()
   print(data)
 except:
