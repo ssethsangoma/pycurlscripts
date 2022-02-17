@@ -4,7 +4,11 @@
 
 import pycurl, json
 from io import BytesIO
-#from urllib import urlencode    REMOVED since python3 does not support
+
+try:
+    from urllib import urlencode
+except:
+    from urllib.parse import urlencode
 
 try:
   option = json.load(open("config.json"))
