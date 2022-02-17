@@ -1,23 +1,19 @@
 #  Retrieve network configuration
-#  sbc --> configuration --> IP seetings --> network --> network
+#  sbc --> configuration --> IP setings --> Accesis control list
 #
 
 import pycurl, json
 from io import BytesIO
-
-try:
-    from urllib import urlencode
-except:
-    from urllib.parse import urlencode
+#from urllib import urlencode    REMOVED since python3 does not support
 
 try:
   option = json.load(open("config.json"))
 
   response=BytesIO()
   base_url = 'http://{0}/SAFe/sng_rest/api/'.format(option["SERVER"])
-  method_name = "retrieve"
-  module_name = "network"
-  obj_type = "configuration"
+  method_name = "list"
+  module_name = "update"
+  obj_type = "package"
   obj_name = ""
   url = base_url+method_name+'/'+module_name+'/'+obj_type+'/'+obj_name
 

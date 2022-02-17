@@ -1,5 +1,5 @@
 #  Retrieve network configuration
-#  sbc --> configuration --> IP seetings --> network --> network
+#  sbc --> configuration --> IP setings --> Accesis control list
 #
 
 import pycurl, json
@@ -10,15 +10,16 @@ try:
 except:
     from urllib.parse import urlencode
 
+
 try:
   option = json.load(open("config.json"))
 
   response=BytesIO()
   base_url = 'http://{0}/SAFe/sng_rest/api/'.format(option["SERVER"])
   method_name = "retrieve"
-  module_name = "network"
-  obj_type = "configuration"
-  obj_name = ""
+  module_name = "certificate"
+  obj_type = "server"
+  obj_name = "server_102"
   url = base_url+method_name+'/'+module_name+'/'+obj_type+'/'+obj_name
 
   headers = {'Content-Type': 'application/json',}

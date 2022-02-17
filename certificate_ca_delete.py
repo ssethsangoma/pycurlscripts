@@ -1,5 +1,5 @@
 #  Retrieve network configuration
-#  sbc --> configuration --> IP seetings --> network --> network
+#  sbc --> configuration --> IP setings --> Accesis control list
 #
 
 import pycurl, json
@@ -15,22 +15,30 @@ try:
 
   response=BytesIO()
   base_url = 'http://{0}/SAFe/sng_rest/api/'.format(option["SERVER"])
-  method_name = "retrieve"
-  module_name = "network"
-  obj_type = "configuration"
-  obj_name = ""
+  method_name = "delete"
+  module_name = "certificate"
+  obj_type = "ca"
+  obj_name = "yahoo_com.pem"
   url = base_url+method_name+'/'+module_name+'/'+obj_type+'/'+obj_name
-
+  print(url)
   headers = {'Content-Type': 'application/json',}
 
   c = pycurl.Curl()
   c.setopt(pycurl.WRITEFUNCTION, response.write)
+
+  post_body = {}
+  p = urlencode(post_body)
+
 
   c.setopt(pycurl.URL, url)
   if(option["API_KEY"]):
     c.setopt(pycurl.HTTPHEADER, ['X-API-KEY: {0}'.format(option["API_KEY"]),'Accept: application/json'])
   else:
     c.setopt(pycurl.HTTPHEADER, ['Accept: application/json'])
+
+  c.setopt(pycurl.POST, 1)
+  c.setopt(pycurl.POSTFIELDS, p)
+
   c.perform()
   data=response.getvalue()
   print(data)
